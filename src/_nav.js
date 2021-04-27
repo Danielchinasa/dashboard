@@ -146,11 +146,11 @@ export default {
     //     },
     //   ],
     // },
-    // {
-    //   name: "Charts",
-    //   url: "/charts",
-    //   icon: "icon-pie-chart",
-    // },
+    {
+      name: "Charts",
+      url: "/charts",
+      icon: "icon-pie-chart",
+    },
     // {
     //   name: "Editors",
     //   url: "/editors",
