@@ -256,16 +256,6 @@ for (var i = 0; i <= elements; i++) {
   data3.push(65);
 }
 
-const pie = {
-  labels: ["Female", "Male"],
-  datasets: [
-    {
-      data: [50, 230],
-      backgroundColor: ["#FF6384", "#36A2EB"],
-      hoverBackgroundColor: ["#FF6384", "#36A2EB"],
-    },
-  ],
-};
 const bar = {
   labels: ["High School", "Graduate", "Higher Education"],
   datasets: [
@@ -298,9 +288,11 @@ class Dashboard extends Component {
     this.state = {
       dropdownOpen: false,
       radioSelected: 2,
+      time: Date.now(),
       todos: [],
-      femaleCount: null,
-      maleCount: null,
+      marritalStatus: [],
+      educationLevel: [],
+      occupations: [],
     };
   }
 
@@ -317,54 +309,59 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    const apiUrl = "/citizens/populationOverview";
+    // const apiUrl = "/citizens/populationOverview";
+    // axios
+    //   .get(apiUrl)
+    //   .then((response) => {
+    //     this.setState({
+    //       todos: response.data,
+    //     });
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => console.log(error));
+
     axios
-      .get(apiUrl)
-      .then((response) => {
-        this.setState({
-          todos: response.data,
-        });
-        console.log(response.data);
-      })
+      .all([
+        axios.get("/citizens/populationOverview"),
+        axios.get("/citizens/maritalStatus"),
+        axios.get("/citizens/educationLevel"),
+        axios.get("/citizens/occupations"),
+      ])
+      .then(
+        axios.spread((obj1, obj2, obj3, obj4) => {
+          // Both requests are now complete
+          this.setState({
+            todos: obj1.data,
+            marritalStatus: obj2.data,
+            educationLevel: obj3.data,
+            occupations: obj4.data,
+          });
+        })
+      )
       .catch((error) => console.log(error));
+    this.interval = setInterval(
+      () => this.setState({ time: Date.now() }),
+      1000
+    );
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
-    const { todos, femaleCount, maleCount } = this.state;
+    const { todos, marritalStatus, educationLevel, occupations } = this.state;
     return (
       <div className="animated fadeIn">
         <Row>
           <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-info">
+            <Card className="text-white bg-success">
               <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown
-                    id="card1"
-                    isOpen={this.state.card1}
-                    toggle={() => {
-                      this.setState({ card1: !this.state.card1 });
-                    }}
-                  >
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>Action</DropdownItem>
-                      <DropdownItem>Another action</DropdownItem>
-                      <DropdownItem disabled>Disabled action</DropdownItem>
-                      <DropdownItem>Something else here</DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
                 <div className="text-value">{todos.totalEnrolled}</div>
                 <div>Total Enrolled Residents</div>
-                <div className="chart-wrapper mt-3" style={{ height: "70px" }}>
-                  <Line
-                    data={cardChartData2}
-                    options={cardChartOpts2}
-                    height={70}
-                  />
-                </div>
+                <div
+                  className="chart-wrapper mt-3"
+                  style={{ height: "70px" }}
+                ></div>
               </CardBody>
             </Card>
           </Col>
@@ -372,33 +369,12 @@ class Dashboard extends Component {
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-primary">
               <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <Dropdown
-                    id="card2"
-                    isOpen={this.state.card2}
-                    toggle={() => {
-                      this.setState({ card2: !this.state.card2 });
-                    }}
-                  >
-                    <DropdownToggle className="p-0" color="transparent">
-                      <i className="icon-location-pin"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>Action</DropdownItem>
-                      <DropdownItem>Another action</DropdownItem>
-                      <DropdownItem>Something else here</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
-                </ButtonGroup>
                 <div className="text-value">{todos.totalIndigenes}</div>
                 <div>Total Number of Indigenes</div>
-                <div className="chart-wrapper mt-3" style={{ height: "70px" }}>
-                  <Line
-                    data={cardChartData1}
-                    options={cardChartOpts1}
-                    height={70}
-                  />
-                </div>
+                <div
+                  className="chart-wrapper mt-3"
+                  style={{ height: "70px" }}
+                ></div>
               </CardBody>
             </Card>
           </Col>
@@ -406,71 +382,26 @@ class Dashboard extends Component {
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-danger">
               <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <Dropdown
-                    id="card3"
-                    isOpen={this.state.card3}
-                    toggle={() => {
-                      this.setState({ card3: !this.state.card3 });
-                    }}
-                  >
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>Action</DropdownItem>
-                      <DropdownItem>Another action</DropdownItem>
-                      <DropdownItem>Something else here</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
-                </ButtonGroup>
                 <div className="text-value">{todos.totalNonIndigenes}</div>
                 <div>Total Number of Non- Indegenes</div>
               </CardBody>
-              <div className="chart-wrapper mt-3" style={{ height: "70px" }}>
-                <Line
-                  data={cardChartData3}
-                  options={cardChartOpts3}
-                  height={70}
-                />
-              </div>
+              <div
+                className="chart-wrapper mt-3"
+                style={{ height: "70px" }}
+              ></div>
             </Card>
           </Col>
 
           <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-danger">
+            <Card className="text-white bg-secondary">
               <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown
-                    id="card4"
-                    isOpen={this.state.card4}
-                    toggle={() => {
-                      this.setState({ card4: !this.state.card4 });
-                    }}
-                  >
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>Action</DropdownItem>
-                      <DropdownItem>Another action</DropdownItem>
-                      <DropdownItem>Something else here</DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <div className="text-value">9.823</div>
-                <div>Members online</div>
+                <div className="text-value">{todos.withDisability}</div>
+                <div>Citizens with Disabilities</div>
               </CardBody>
               <div
                 className="chart-wrapper mt-3 mx-3"
                 style={{ height: "70px" }}
-              >
-                <Bar
-                  data={cardChartData4}
-                  options={cardChartOpts4}
-                  height={70}
-                />
-              </div>
+              ></div>
             </Card>
           </Col>
         </Row>
@@ -501,7 +432,34 @@ class Dashboard extends Component {
               <CardHeader>Educational Level</CardHeader>
               <CardBody>
                 <div className="chart-wrapper">
-                  <Bar data={bar} options={options} height="285" />
+                  <Bar
+                    data={{
+                      labels: [
+                        "Below High School",
+                        "High School",
+                        "Graduate",
+                        "Higher Education",
+                      ],
+                      datasets: [
+                        {
+                          label: "Educational Levels",
+                          backgroundColor: "rgba(255,99,132,0.2)",
+                          borderColor: "rgba(255,99,132,1)",
+                          borderWidth: 1,
+                          hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                          hoverBorderColor: "rgba(255,99,132,1)",
+                          data: [
+                            educationLevel.belowHighSchool,
+                            educationLevel.highschool,
+                            educationLevel.graduates,
+                            educationLevel.higerEducation,
+                          ],
+                        },
+                      ],
+                    }}
+                    options={options}
+                    height="285"
+                  />
                 </div>
               </CardBody>
             </Card>
@@ -510,10 +468,36 @@ class Dashboard extends Component {
         <Row>
           <Col xs="6" sm="6" lg="6">
             <Card>
-              <CardHeader>Gender</CardHeader>
+              <CardHeader>Marrital Status</CardHeader>
               <CardBody>
                 <div className="chart-wrapper">
-                  <Pie data={pie} />
+                  <Pie
+                    data={{
+                      labels: ["Married", "Single", "Separated", "Divorced"],
+                      datasets: [
+                        {
+                          data: [
+                            marritalStatus.married,
+                            marritalStatus.singles,
+                            marritalStatus.separated,
+                            marritalStatus.divorced,
+                          ],
+                          backgroundColor: [
+                            "#41B883",
+                            "#FF6384",
+                            "#36A2EB",
+                            "#DD1B16",
+                          ],
+                          hoverBackgroundColor: [
+                            "#41B883",
+                            "#FF6384",
+                            "#36A2EB",
+                            "#DD1B16",
+                          ],
+                        },
+                      ],
+                    }}
+                  />
                 </div>
               </CardBody>
             </Card>
@@ -523,7 +507,36 @@ class Dashboard extends Component {
               <CardHeader>Educational Level</CardHeader>
               <CardBody>
                 <div className="chart-wrapper">
-                  <Bar data={bar} options={options} height="285" />
+                  <Bar
+                    data={{
+                      labels: [
+                        "Employed",
+                        "Self-Employed",
+                        "Business Owner",
+                        "Student",
+                        "Unemployed",
+                      ],
+                      datasets: [
+                        {
+                          label: "Educational Levels",
+                          backgroundColor: "rgba(255,99,132,0.2)",
+                          borderColor: "rgba(255,99,132,1)",
+                          borderWidth: 1,
+                          hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                          hoverBorderColor: "rgba(255,99,132,1)",
+                          data: [
+                            occupations.employed,
+                            occupations.selfEmployed,
+                            occupations.businessOwners,
+                            occupations.students,
+                            occupations.unemployed,
+                          ],
+                        },
+                      ],
+                    }}
+                    options={options}
+                    height="285"
+                  />
                 </div>
               </CardBody>
             </Card>

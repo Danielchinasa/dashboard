@@ -5,6 +5,16 @@ export default {
       url: "/dashboard",
       icon: "icon-speedometer",
     },
+    {
+      name: "Citizens List",
+      url: "/citizensList",
+      icon: "icon-people",
+    },
+    {
+      name: "Users",
+      url: "/users",
+      icon: "icon-user",
+    },
     // {
     //   title: true,
     //   name: "Theme",
@@ -146,11 +156,11 @@ export default {
     //     },
     //   ],
     // },
-    {
-      name: "Charts",
-      url: "/charts",
-      icon: "icon-pie-chart",
-    },
+    // {
+    //   name: "Charts",
+    //   url: "/charts",
+    //   icon: "icon-pie-chart",
+    // },
     // {
     //   name: "Editors",
     //   url: "/editors",
@@ -339,11 +349,11 @@ export default {
     //   url: "/pages",
     //   icon: "icon-star",
     //   children: [
-    //     {
-    //       name: "Login",
-    //       url: "/login",
-    //       icon: "icon-star",
-    //     },
+    {
+      name: "Login",
+      url: "/login",
+      icon: "icon-star",
+    },
     //     {
     //       name: "Register",
     //       url: "/register",

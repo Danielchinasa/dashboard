@@ -1,0 +1,6 @@
+{
+  "name": "CitizensList",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CitizensList.js"
+}
