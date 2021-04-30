@@ -504,7 +504,7 @@ class Dashboard extends Component {
           </Col>
           <Col xs="6" sm="6" lg="6">
             <Card>
-              <CardHeader>Educational Level</CardHeader>
+              <CardHeader>Employment Level</CardHeader>
               <CardBody>
                 <div className="chart-wrapper">
                   <Bar
@@ -518,7 +518,7 @@ class Dashboard extends Component {
                       ],
                       datasets: [
                         {
-                          label: "Educational Levels",
+                          label: "Employment Levels",
                           backgroundColor: "rgba(255,99,132,0.2)",
                           borderColor: "rgba(255,99,132,1)",
                           borderWidth: 1,
