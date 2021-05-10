@@ -6,15 +6,72 @@ export default {
       icon: "icon-speedometer",
     },
     {
-      name: "Citizens List",
-      url: "/citizensList",
+      title: true,
+      name: "Categories",
+      wrapper: {
+        element: "",
+        attributes: {},
+      },
+    },
+    {
+      name: "People and Population",
+      url: "/peopleAndPopulation",
       icon: "icon-people",
     },
     {
-      name: "Users",
-      url: "/users",
-      icon: "icon-user",
+      name: "Health",
+      url: "/health",
+      icon: "icon-people",
     },
+    {
+      name: "Living Arrangements",
+      url: "/familiesAndLiving",
+      icon: "icon-people",
+    },
+    {
+      name: "Education",
+      url: "/education",
+      icon: "icon-people",
+    },
+    {
+      name: "Business and Economy",
+      url: "/businessAndEconomy",
+      icon: "icon-people",
+    },
+    {
+      name: "Employment",
+      url: "/employment",
+      icon: "icon-people",
+    },
+
+    {
+      name: "Housing",
+      url: "/housing",
+      icon: "icon-people",
+    },
+    {
+      title: true,
+      name: "Explore By",
+      wrapper: {
+        element: "",
+        attributes: {},
+      },
+    },
+    {
+      name: "Local Government",
+      url: "/localGovernment",
+      icon: "icon-people",
+    },
+    // {
+    //   name: "Citizens List",
+    //   url: "/citizensList",
+    //   icon: "icon-people",
+    // },
+    // {
+    //   name: "Users",
+    //   url: "/users",
+    //   icon: "icon-user",
+    // },
     // {
     //   title: true,
     //   name: "Theme",
@@ -103,11 +160,11 @@ export default {
     //       url: "/base/progress-bar",
     //       icon: "icon-puzzle",
     //     },
-    //     {
-    //       name: "Switches",
-    //       url: "/base/switches",
-    //       icon: "icon-puzzle",
-    //     },
+    // {
+    //   name: "Switches",
+    //   url: "/base/switches",
+    //   icon: "icon-puzzle",
+    // },
     //     {
     //       name: "Tabs",
     //       url: "/base/tabs",
@@ -349,11 +406,11 @@ export default {
     //   url: "/pages",
     //   icon: "icon-star",
     //   children: [
-    {
-      name: "Login",
-      url: "/login",
-      icon: "icon-star",
-    },
+    // {
+    //   name: "Login",
+    //   url: "/login",
+    //   icon: "icon-star",
+    // },
     //     {
     //       name: "Register",
     //       url: "/register",

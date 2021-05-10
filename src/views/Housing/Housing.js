@@ -11,16 +11,23 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
+  FormGroup,
+  Input,
+  Label,
   Row,
 } from "reactstrap";
 import { CustomTooltips } from "@coreui/coreui-plugin-chartjs-custom-tooltips";
 import { getStyle } from "@coreui/coreui-pro/dist/js/coreui-utilities";
 import { Pie } from "react-chartjs-2";
 import axios from "axios";
-import Map from "../../assets/img/map.png";
+import Map from "../../assets/img/crossriver41.gif";
 import { CardGroup } from "reactstrap";
 import Widget04 from "../Widgets/Widget04";
 import Chart from "react-apexcharts";
+import { AppSwitch } from "@coreui/react";
+import { VectorMap } from "react-jvectormap";
+import "./style.css";
+import ReactApexChart from "react-apexcharts";
 
 const brandPrimary = getStyle("--primary");
 const brandInfo = getStyle("--info");
@@ -282,7 +289,7 @@ const options = {
   maintainAspectRatio: false,
 };
 
-class Dashboard extends Component {
+class Housing extends Component {
   constructor(props) {
     super(props);
 
@@ -295,18 +302,83 @@ class Dashboard extends Component {
       time: Date.now(),
       todos: [],
       marritalStatus: [],
-      educationLevel: [],
-      percentages: [],
+      EmploymentLevel: [],
+      occupations: [],
 
       series: [
         {
-          data: [400, 430],
+          name: "High - 2013",
+          data: [28, 29, 33, 36, 32, 32, 33],
         },
       ],
       options: {
         chart: {
+          height: 350,
+          type: "line",
+          dropShadow: {
+            enabled: true,
+            color: "#000",
+            top: 18,
+            left: 7,
+            blur: 10,
+            opacity: 0.2,
+          },
+          toolbar: {
+            show: false,
+          },
+        },
+        colors: ["#77B6EA"],
+        dataLabels: {
+          enabled: true,
+        },
+        stroke: {
+          curve: "smooth",
+        },
+        title: {
+          text: "Homeownership in Cross River",
+          align: "left",
+        },
+        grid: {
+          borderColor: "#e7e7e7",
+          row: {
+            colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+            opacity: 0.5,
+          },
+        },
+        markers: {
+          size: 1,
+        },
+        xaxis: {
+          categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+          title: {
+            text: "",
+          },
+        },
+        yaxis: {
+          title: {
+            text: "",
+          },
+          min: 5,
+          max: 40,
+        },
+        legend: {
+          position: "top",
+          horizontalAlign: "right",
+          floating: true,
+          offsetY: -25,
+          offsetX: -5,
+        },
+      },
+
+      series2: [
+        {
+          data: [400, 430, 509, 743, 200, 473],
+        },
+      ],
+      options2: {
+        chart: {
           type: "bar",
-          height: 380,
+          height: 280,
         },
         plotOptions: {
           bar: {
@@ -318,7 +390,14 @@ class Dashboard extends Component {
             },
           },
         },
-        colors: ["#33b2df", "#546E7A"],
+        colors: [
+          "#33b2df",
+          "#546E7A",
+          "#546E7A",
+          "#546E7A",
+          "#546E7A",
+          "#546E7A",
+        ],
         dataLabels: {
           enabled: true,
           textAnchor: "start",
@@ -338,7 +417,14 @@ class Dashboard extends Component {
           colors: ["#fff"],
         },
         xaxis: {
-          categories: ["Male(%)", "Female(%)"],
+          categories: [
+            "Hearing difficulty",
+            "Vision difficulty",
+            "cognitive difficulty",
+            "Female",
+            "Female",
+            "Female",
+          ],
         },
         yaxis: {
           labels: {
@@ -346,7 +432,7 @@ class Dashboard extends Component {
           },
         },
         title: {
-          text: "VETERANS BY SEX IN CROSS RIVER STATE",
+          text: "Types of Disabilities in Cross River State",
           align: "center",
           floating: true,
         },
@@ -396,7 +482,7 @@ class Dashboard extends Component {
         axios.get("/citizens/populationOverview"),
         axios.get("/citizens/maritalStatus"),
         axios.get("/citizens/educationLevel"),
-        axios.get("/citizens/percentages"),
+        axios.get("/citizens/occupations"),
       ])
       .then(
         axios.spread((obj1, obj2, obj3, obj4) => {
@@ -405,7 +491,7 @@ class Dashboard extends Component {
             todos: obj1.data,
             marritalStatus: obj2.data,
             educationLevel: obj3.data,
-            percentages: obj4.data,
+            occupations: obj4.data,
           });
         })
       )
@@ -420,144 +506,73 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { todos, percentages, educationLevel, occupations } = this.state;
+    const { todos, marritalStatus, educationLevel, occupations } = this.state;
     return (
       <div className="animated fadeIn">
-        <h1>CROSS RIVER</h1>
-        <Row className="mb-3">
-          <Col xs="12" sm="12" lg="12">
-            <h5>State in: Nigeria</h5>
-            <img src={Map} height="220px" width="200px" />
-          </Col>
-        </Row>
-        <CardGroup className="mb-4">
-          <Widget04
-            icon="icon-people"
-            color="info"
-            header={todos.totalEnrolled}
-            value="25"
-          >
-            POPULATION
-          </Widget04>
-          <Widget04 icon="icon-home" color="success" header="65712" value="25">
-            MEDIAN HOUSEHOLD INCOME
-          </Widget04>
-          <Widget04
-            icon="icon-wallet"
-            color="warning"
-            header="12.3%"
-            value="25"
-          >
-            POVERTY RATE
-          </Widget04>
-          <Widget04 icon="icon-badge" color="primary" header="28.9%" value="25">
-            BACHELOR'S DEGREE OR HIGHER
-          </Widget04>
-        </CardGroup>
-
+        <p className="h2">Housing</p>
+        <hr style={{ color: "#000" }} />
         <Row>
           <Col xs="6" sm="6" lg="4">
-            <p className="h1">Veterans</p>
-            <p className="h3">{percentages.percentVets}%</p>
+            <p className="h3" style={{ color: "#33b2df" }}>
+              Housing Units
+            </p>
             <p>
-              <ins>Veterans in Cross River States</ins>
+              <span className="h3">9.2%</span>
+              <small>+/- 0.1</small>
+            </p>
+
+            <p>
+              <ins>Housing units in Cross River State</ins>
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">
-            <Chart
-              options={this.state.options}
-              series={[
-                {
-                  data: [percentages.maleVeterans, percentages.femaleVeterans],
+            <VectorMap
+              className="jvectormap-container"
+              map={"world_mill"}
+              backgroundColor="#E4E5E6"
+              markerStyle={{
+                initial: {
+                  fill: "#FFFF",
+                  stroke: "#383f47",
                 },
-              ]}
-              type="bar"
-              width="800"
-              height="150"
+              }}
+              regionStyle={{
+                initial: {
+                  fill: "#128da7",
+                },
+                hover: {
+                  fill: "#A0D1DC",
+                },
+              }}
+              ref="map"
+              containerStyle={{
+                width: "100%",
+                height: "100%",
+              }}
             />
           </Col>
         </Row>
-
-        {/* <Row>
-          <Col xs="6" sm="6" lg="6">
-            <Card>
-              <CardHeader>Marrital Status</CardHeader>
-              <CardBody>
-                <div className="chart-wrapper">
-                  <Pie
-                    data={{
-                      labels: ["Married", "Single", "Separated", "Divorced"],
-                      datasets: [
-                        {
-                          data: [
-                            marritalStatus.married,
-                            marritalStatus.singles,
-                            marritalStatus.separated,
-                            marritalStatus.divorced,
-                          ],
-                          backgroundColor: [
-                            "#41B883",
-                            "#FF6384",
-                            "#36A2EB",
-                            "#DD1B16",
-                          ],
-                          hoverBackgroundColor: [
-                            "#41B883",
-                            "#FF6384",
-                            "#36A2EB",
-                            "#DD1B16",
-                          ],
-                        },
-                      ],
-                    }}
-                  />
-                </div>
-              </CardBody>
-            </Card>
+        <hr />
+        <Row>
+          <Col xs="6" sm="6" lg="4">
+            <p className="h1">Homeownership</p>
+            <p className="h3">12.7%</p>
+            <p>
+              <ins>Homeownership rate in Cross River States</ins>
+            </p>
           </Col>
-          <Col xs="6" sm="6" lg="6">
-            <Card>
-              <CardHeader>Employment Level</CardHeader>
-              <CardBody>
-                <div className="chart-wrapper">
-                  <Bar
-                    data={{
-                      labels: [
-                        "Employed",
-                        "Self-Employed",
-                        "Business Owner",
-                        "Student",
-                        "Unemployed",
-                      ],
-                      datasets: [
-                        {
-                          label: "Employment Levels",
-                          backgroundColor: "rgba(255,99,132,0.2)",
-                          borderColor: "rgba(255,99,132,1)",
-                          borderWidth: 1,
-                          hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                          hoverBorderColor: "rgba(255,99,132,1)",
-                          data: [
-                            occupations.employed,
-                            occupations.selfEmployed,
-                            occupations.businessOwners,
-                            occupations.students,
-                            occupations.unemployed,
-                          ],
-                        },
-                      ],
-                    }}
-                    options={options}
-                    height="285"
-                  />
-                </div>
-              </CardBody>
-            </Card>
+          <Col xs="6" sm="6" lg="8">
+            <ReactApexChart
+              options={this.state.options}
+              series={this.state.series}
+              type="line"
+              height={350}
+            />
           </Col>
-        </Row> */}
+        </Row>
       </div>
     );
   }
 }
 
-export default Dashboard;
+export default Housing;

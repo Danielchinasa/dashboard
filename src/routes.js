@@ -138,8 +138,40 @@ const Dashboard = Loadable({
   loading: Loading,
 });
 
+const Health = Loadable({
+  loader: () => import("./views/Health"),
+  loading: Loading,
+});
+const PeopleAndPopulation = Loadable({
+  loader: () => import("./views/PeopleAndPopulation"),
+  loading: Loading,
+});
+const FamiliesAndLiving = Loadable({
+  loader: () => import("./views/FamiliesAndLiving"),
+  loading: Loading,
+});
+const Education = Loadable({
+  loader: () => import("./views/Education"),
+  loading: Loading,
+});
+const BusinessAndEconomy = Loadable({
+  loader: () => import("./views/BusinessAndEconomy"),
+  loading: Loading,
+});
+const Employment = Loadable({
+  loader: () => import("./views/Employment"),
+  loading: Loading,
+});
+const Housing = Loadable({
+  loader: () => import("./views/Housing"),
+  loading: Loading,
+});
 const CitizensList = Loadable({
   loader: () => import("./views/CitizensList"),
+  loading: Loading,
+});
+const LocalGovernment = Loadable({
+  loader: () => import("./views/LocalGovernment"),
   loading: Loading,
 });
 const Users = Loadable({
@@ -252,7 +284,60 @@ const Widgets = Loadable({
 const routes = [
   { path: "/", name: "Home", component: DefaultLayout, exact: true },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
+  {
+    path: "/health",
+    name: "Health",
+    component: Health,
+  },
+  {
+    path: "/localGovernment",
+    name: "LocalGovernment",
+    component: LocalGovernment,
+  },
+  {
+    path: "/education",
+    name: "Education",
+    component: Education,
+  },
+  {
+    path: "/businessAndEconomy",
+    name: "BusinessAndEconomy",
+    component: BusinessAndEconomy,
+  },
+  {
+    path: "/employment",
+    name: "Employment",
+    component: Employment,
+  },
+  {
+    path: "/housing",
+    name: "Housing",
+    component: Housing,
+  },
+  {
+    path: "/peopleAndPopulation",
+    name: "PeopleAndPopulation",
+    component: PeopleAndPopulation,
+  },
+  {
+    path: "/familiesAndLiving",
+    name: "FamiliesAndLiving",
+    component: FamiliesAndLiving,
+  },
+  { path: "/education", name: "Education", component: Education },
+  { path: "/housing", name: "Housing", component: Housing },
+  {
+    path: "/businessAndEconomy",
+    name: "BusinessAndEconoomy",
+    component: BusinessAndEconomy,
+  },
+  { path: "/employment", name: "Employment", component: Employment },
   { path: "/citizensList", name: "CitizensList", component: CitizensList },
+  {
+    path: "/localGovernment",
+    name: "LocalGovernment",
+    component: LocalGovernment,
+  },
   { path: "/users", name: "Users", component: Users },
   { path: "/theme", name: "Theme", component: Colors, exact: true },
   { path: "/theme/colors", name: "Colors", component: Colors },

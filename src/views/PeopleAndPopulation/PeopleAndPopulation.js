@@ -11,16 +11,22 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
+  FormGroup,
+  Input,
+  Label,
   Row,
 } from "reactstrap";
 import { CustomTooltips } from "@coreui/coreui-plugin-chartjs-custom-tooltips";
 import { getStyle } from "@coreui/coreui-pro/dist/js/coreui-utilities";
 import { Pie } from "react-chartjs-2";
 import axios from "axios";
-import Map from "../../assets/img/map.png";
+import Map from "../../assets/img/crossriver41.gif";
 import { CardGroup } from "reactstrap";
 import Widget04 from "../Widgets/Widget04";
 import Chart from "react-apexcharts";
+import { AppSwitch } from "@coreui/react";
+import { VectorMap } from "react-jvectormap";
+import "./style.css";
 
 const brandPrimary = getStyle("--primary");
 const brandInfo = getStyle("--info");
@@ -282,7 +288,7 @@ const options = {
   maintainAspectRatio: false,
 };
 
-class Dashboard extends Component {
+class PeopleAndPopulation extends Component {
   constructor(props) {
     super(props);
 
@@ -296,11 +302,11 @@ class Dashboard extends Component {
       todos: [],
       marritalStatus: [],
       educationLevel: [],
-      percentages: [],
+      occupations: [],
 
       series: [
         {
-          data: [400, 430],
+          data: [400, 430, 1100],
         },
       ],
       options: {
@@ -318,7 +324,7 @@ class Dashboard extends Component {
             },
           },
         },
-        colors: ["#33b2df", "#546E7A"],
+        colors: ["#33b2df", "#546E7A", "#d4526e"],
         dataLabels: {
           enabled: true,
           textAnchor: "start",
@@ -338,7 +344,11 @@ class Dashboard extends Component {
           colors: ["#fff"],
         },
         xaxis: {
-          categories: ["Male(%)", "Female(%)"],
+          categories: [
+            "Under 5 years",
+            "18 years and older",
+            "65 years and older",
+          ],
         },
         yaxis: {
           labels: {
@@ -346,7 +356,7 @@ class Dashboard extends Component {
           },
         },
         title: {
-          text: "VETERANS BY SEX IN CROSS RIVER STATE",
+          text: "Population by Age Range in Cross River State",
           align: "center",
           floating: true,
         },
@@ -396,7 +406,7 @@ class Dashboard extends Component {
         axios.get("/citizens/populationOverview"),
         axios.get("/citizens/maritalStatus"),
         axios.get("/citizens/educationLevel"),
-        axios.get("/citizens/percentages"),
+        axios.get("/citizens/occupations"),
       ])
       .then(
         axios.spread((obj1, obj2, obj3, obj4) => {
@@ -405,7 +415,7 @@ class Dashboard extends Component {
             todos: obj1.data,
             marritalStatus: obj2.data,
             educationLevel: obj3.data,
-            percentages: obj4.data,
+            occupations: obj4.data,
           });
         })
       )
@@ -420,61 +430,120 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { todos, percentages, educationLevel, occupations } = this.state;
+    const { todos, marritalStatus, educationLevel, occupations } = this.state;
     return (
       <div className="animated fadeIn">
-        <h1>CROSS RIVER</h1>
-        <Row className="mb-3">
-          <Col xs="12" sm="12" lg="12">
-            <h5>State in: Nigeria</h5>
-            <img src={Map} height="220px" width="200px" />
-          </Col>
-        </Row>
-        <CardGroup className="mb-4">
-          <Widget04
-            icon="icon-people"
-            color="info"
-            header={todos.totalEnrolled}
-            value="25"
-          >
-            POPULATION
-          </Widget04>
-          <Widget04 icon="icon-home" color="success" header="65712" value="25">
-            MEDIAN HOUSEHOLD INCOME
-          </Widget04>
-          <Widget04
-            icon="icon-wallet"
-            color="warning"
-            header="12.3%"
-            value="25"
-          >
-            POVERTY RATE
-          </Widget04>
-          <Widget04 icon="icon-badge" color="primary" header="28.9%" value="25">
-            BACHELOR'S DEGREE OR HIGHER
-          </Widget04>
-        </CardGroup>
-
+        <p className="h2">People and Population</p>
+        <hr style={{ color: "#000" }} />
         <Row>
           <Col xs="6" sm="6" lg="4">
-            <p className="h1">Veterans</p>
-            <p className="h3">{percentages.percentVets}%</p>
+            <p className="h2" style={{ color: "#33b2df" }}>
+              Age and Sex
+            </p>
             <p>
-              <ins>Veterans in Cross River States</ins>
+              <span className="h3">38.5</span>
+              <small>+/- 0.1</small>
+            </p>
+
+            <p>
+              <ins>Median age in Cross River State</ins>
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">
             <Chart
               options={this.state.options}
-              series={[
-                {
-                  data: [percentages.maleVeterans, percentages.femaleVeterans],
-                },
-              ]}
+              series={this.state.series}
               type="bar"
               width="800"
-              height="150"
+              height="200"
             />
+            <div>
+              <AppSwitch
+                className={"mx-1"}
+                variant={"pill"}
+                color={"info"}
+                checked
+              />
+              <strong>Margin of Error</strong>
+            </div>
+          </Col>
+        </Row>
+        <hr />
+        <Row>
+          <Col xs="6" sm="6" lg="4">
+            <p className="h2" style={{ color: "#33b2df" }}>
+              Foreign Born
+            </p>
+            <p>
+              <span className="h3">13.7%</span>
+              <small>+/- 0.1</small>
+            </p>
+
+            <p>
+              <ins>Foreign born in Cross River State</ins>
+            </p>
+          </Col>
+          <Col xs="6" sm="6" lg="8">
+            <VectorMap
+              className="jvectormap-container"
+              map={"world_mill"}
+              backgroundColor="#E4E5E6"
+              markerStyle={{
+                initial: {
+                  fill: "#FFFF",
+                  stroke: "#383f47",
+                },
+              }}
+              regionStyle={{
+                initial: {
+                  fill: "#128da7",
+                },
+                hover: {
+                  fill: "#A0D1DC",
+                },
+              }}
+              ref="map"
+              containerStyle={{
+                width: "100%",
+                height: "100%",
+              }}
+            />
+          </Col>
+        </Row>
+        <hr />
+        <Row>
+          <Col xs="12" sm="12" lg="4">
+            <p className="h2" style={{ color: "#33b2df" }}>
+              Language Spoken at Home
+            </p>
+            <p>
+              <span className="h3">20.5%</span>
+              <small>+/- 0.1</small>
+            </p>
+
+            <p>
+              <ins>
+                Language other than English spoken at home in Cross River State
+              </ins>
+            </p>
+          </Col>
+          <Col xs="12" sm="12" lg="8">
+            <Chart
+              options={this.state.options}
+              series={this.state.series}
+              type="bar"
+              width="800"
+              height="200"
+            />
+            <div>
+              <AppSwitch
+                className={"mx-1"}
+                variant={"pill"}
+                color={"info"}
+                checked
+              />
+              <strong>Margin of Error</strong>
+            </div>
           </Col>
         </Row>
 
@@ -560,4 +629,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default PeopleAndPopulation;
