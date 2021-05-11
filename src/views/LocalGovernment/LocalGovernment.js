@@ -3,6 +3,7 @@ import { Bar, Line } from "react-chartjs-2";
 import {
   ButtonDropdown,
   ButtonGroup,
+  Button,
   Card,
   CardBody,
   CardHeader,
@@ -455,6 +456,12 @@ class LocalGovernment extends Component {
           },
         },
       },
+
+      res: "",
+      confirmedCases: 0,
+      targetCountry: "",
+      deathNumber: 0,
+      targetProvince: "",
     };
   }
 
@@ -486,21 +493,47 @@ class LocalGovernment extends Component {
     //   })
     //   .catch((error) => console.log(error));
 
+    // axios
+    //   .all([
+    //     axios.get("/citizens/populationOverview"),
+    //     axios.get("/citizens/maritalStatus"),
+    //     axios.get("/citizens/educationLevel"),
+    //     axios.get("/citizens/occupations"),
+    //   ])
+    //   .then(
+    //     axios.spread((obj1, obj2, obj3, obj4) => {
+    //       // Both requests are now complete
+    //       this.setState({
+    //         todos: obj1.data,
+    //         marritalStatus: obj2.data,
+    //         educationLevel: obj3.data,
+    //         occupations: obj4.data,
+    //       });
+    //     })
+    //   )
+    //   .catch((error) => console.log(error));
+    // this.interval = setInterval(
+    //   () => this.setState({ time: Date.now() }),
+    //   1000
+    // );
+
+    this.handleFetch("Azerbaijan");
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+  handleChange = (target) => {
+    this.handleFetch(target);
+  };
+
+  handleFetch = (target) => {
     axios
-      .all([
-        axios.get("/citizens/populationOverview"),
-        axios.get("/citizens/maritalStatus"),
-        axios.get("/citizens/educationLevel"),
-        axios.get("/citizens/occupations"),
-      ])
+      .all([axios.get("/citizens/lga_percentages/" + target)])
       .then(
-        axios.spread((obj1, obj2, obj3, obj4) => {
+        axios.spread((obj1) => {
           // Both requests are now complete
           this.setState({
             todos: obj1.data,
-            marritalStatus: obj2.data,
-            educationLevel: obj3.data,
-            occupations: obj4.data,
           });
         })
       )
@@ -509,10 +542,35 @@ class LocalGovernment extends Component {
       () => this.setState({ time: Date.now() }),
       1000
     );
-  }
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
+    // fetch(
+    //   "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats?country=" +
+    //     target,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "x-rapidapi-key":
+    //         "2f66132eeemsh16e2dd05b2ecd59p1ab765jsnc1f549cafc64",
+    //       "x-rapidapi-host": "covid-19-coronavirus-statistics.p.rapidapi.com",
+    //     },
+    //   }
+    // )
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     this.setState({
+    //       res: data.data.lastChecked,
+    //       confirmedCases: data.data.covid19Stats[0].confirmed,
+    //       targetCountry: data.data.covid19Stats[0].country,
+    //       deathNumber: data.data.covid19Stats[0].deaths,
+    //       targetProvince: data.data.covid19Stats[0].province,
+    //       totalCitizens: "37",
+    //       veterans: "90",
+    //       percentIndigenes: "87",
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
+  };
 
   render() {
     const { todos, marritalStatus, educationLevel, occupations } = this.state;
@@ -520,10 +578,160 @@ class LocalGovernment extends Component {
       <div className="animated fadeIn">
         <Row>
           <Col xs="6" sm="6" lg="6">
-            <p className="h1">Local Government: Obubura</p>
+            <p className="h1">Local Government: {this.state.targetCountry}</p>
           </Col>
           <Col xs="6" sm="6" lg="6">
-            <div style={{ paddingTop: "10px" }}>
+            <Button
+              className="m-1"
+              onClick={() => this.handleChange("Azerbaijan")}
+              color="primary"
+            >
+              Azerbaijan
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("Russia")}
+            >
+              Russia
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("Turkey")}
+            >
+              Turkey
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("1")}
+            >
+              Abi
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("2")}
+            >
+              Akamkpa
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("3")}
+            >
+              Akpabuyo
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("4")}
+            >
+              Bekwarra
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("5")}
+            >
+              Bakassi
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("6")}
+            >
+              Biase
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("7")}
+            >
+              Boki
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("8")}
+            >
+              Calabar Municipal
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("9")}
+            >
+              Calabar South
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("10")}
+            >
+              Etung
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("11")}
+            >
+              Ikom
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("12")}
+            >
+              Obanliku
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("13")}
+            >
+              Obubra
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("14")}
+            >
+              Odukpani
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("15")}
+            >
+              Ogoja
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("16")}
+            >
+              Yakuur
+            </Button>
+            <Button
+              className="m-1"
+              color="primary"
+              onClick={() => this.handleChange("17")}
+            >
+              Yala
+            </Button>
+            {/* <hr />
+            Last Updated: {this.state.res}
+            <br />
+            Confirmed Cases: {this.state.confirmedCases}
+            <br />
+            Country: {this.state.targetCountry}
+            <br />
+            Number of Death: {this.state.deathNumber}
+            <br />
+            Province: {this.state.targetProvince} */}
+            {/* <div style={{ paddingTop: "10px" }}>
               <ButtonDropdown
                 isOpen={this.state.dropdownOpen2[0]}
                 toggle={() => {
@@ -534,12 +742,11 @@ class LocalGovernment extends Component {
                   Filter By Local Government Area
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>Action</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>Another Action</DropdownItem>
+                  <DropdownItem>Abi</DropdownItem>
+                  <DropdownItem>Akamkpa</DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
-            </div>
+            </div> */}
           </Col>
         </Row>
 
@@ -548,7 +755,7 @@ class LocalGovernment extends Component {
           <Widget04
             icon="icon-people"
             color="info"
-            header={todos.totalEnrolled}
+            header={todos.totalCitizens}
             value="25"
           >
             POPULATION
@@ -570,15 +777,86 @@ class LocalGovernment extends Component {
         </CardGroup>
         <Row>
           <Col xs="6" sm="6" lg="4">
-            <p className="h1">Veterans</p>
-            <p className="h3">12%</p>
+            <p className="h2" style={{ color: "#33b2df" }}>
+              Veterans
+            </p>
+            <p className="h3">{this.state.veterans}%</p>
             <p>
               <ins>Veterans in Cross River States</ins>
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">
             <Chart
-              options={this.state.options2}
+              options={{
+                chart: {
+                  type: "bar",
+                  height: 280,
+                },
+                plotOptions: {
+                  bar: {
+                    barHeight: "100%",
+                    distributed: true,
+                    horizontal: true,
+                    dataLabels: {
+                      position: "bottom",
+                    },
+                  },
+                },
+                colors: [
+                  "#33b2df",
+                  "#546E7A",
+                  "#546E7A",
+                  "#546E7A",
+                  "#546E7A",
+                  "#546E7A",
+                ],
+                dataLabels: {
+                  enabled: true,
+                  textAnchor: "start",
+                  style: {
+                    colors: ["#fff"],
+                  },
+                  formatter: function (val, opt) {
+                    return (
+                      opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+                    );
+                  },
+                  offsetX: 0,
+                  dropShadow: {
+                    enabled: true,
+                  },
+                },
+                stroke: {
+                  width: 1,
+                  colors: ["#fff"],
+                },
+                xaxis: {
+                  categories: ["Male", "Female"],
+                },
+                yaxis: {
+                  labels: {
+                    show: false,
+                  },
+                },
+                title: {
+                  text: "Veterans by Sex in ",
+                  align: "center",
+                  floating: true,
+                },
+                tooltip: {
+                  theme: "dark",
+                  x: {
+                    show: false,
+                  },
+                  y: {
+                    title: {
+                      formatter: function () {
+                        return "";
+                      },
+                    },
+                  },
+                },
+              }}
               series={[
                 {
                   data: [300, 500],
@@ -730,7 +1008,7 @@ class LocalGovernment extends Component {
         <hr />
         <Row>
           <Col xs="6" sm="6" lg="4">
-            <p className="h3" style={{ color: "#33b2df" }}>
+            <p className="h2" style={{ color: "#33b2df" }}>
               Health Insurance
             </p>
             <p>
@@ -744,17 +1022,21 @@ class LocalGovernment extends Component {
           </Col>
           <Col xs="6" sm="6" lg="8">
             <ReactApexChart
-              options={this.state.options}
-              series={this.state.series}
-              type="line"
-              height={350}
+              options={{}}
+              series={[44, 55]}
+              // type="line"
+              type="donut"
+              // height={350}
+              width="380"
             />
           </Col>
         </Row>
         <hr />
         <Row>
           <Col xs="6" sm="6" lg="4">
-            <p className="h1">Disability</p>
+            <p className="h2" style={{ color: "#33b2df" }}>
+              Disability
+            </p>
             <p className="h3">12.7%</p>
             <p>
               <ins>Disabled population in Cross River States</ins>
@@ -857,7 +1139,9 @@ class LocalGovernment extends Component {
         <hr />
         <Row>
           <Col xs="6" sm="6" lg="4">
-            <p className="h2">Educational Attainment</p>
+            <p className="h2" style={{ color: "#33b2df" }}>
+              Educational Attainment
+            </p>
             <p className="h3">12.7%</p>
             <p>
               <ins>High school graduate or higher in Cross River States</ins>

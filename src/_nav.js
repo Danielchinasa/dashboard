@@ -57,10 +57,112 @@ export default {
         attributes: {},
       },
     },
+    // {
+    //   name: "Local Government",
+    //   url: "/localGovernment",
+    //   icon: "icon-people",
+    // },
     {
       name: "Local Government",
       url: "/localGovernment",
-      icon: "icon-people",
+      icon: "icon-cursor",
+      children: [
+        {
+          name: "Abi",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Akamkpa",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Akpabuyo",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Bekwarra",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Bakassi",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Bakassi",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Biase",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Boki",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Calabar Municipal",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Calabar South",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Etung",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Ikom",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Obanliku",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Obubra",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Obudu",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Odukpani",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Ogoja",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Yakuur",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+        {
+          name: "Yala",
+          url: "/localGovernment",
+          icon: "icon-cursor",
+        },
+      ],
     },
     // {
     //   name: "Citizens List",

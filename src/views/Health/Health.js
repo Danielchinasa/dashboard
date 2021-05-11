@@ -531,10 +531,12 @@ class Health extends Component {
           </Col>
           <Col xs="6" sm="6" lg="8">
             <ReactApexChart
-              options={this.state.options}
-              series={this.state.series}
-              type="line"
-              height={350}
+              options={{}}
+              series={[44, 55]}
+              // type="line"
+              type="donut"
+              // height={350}
+              width="380"
             />
           </Col>
         </Row>
