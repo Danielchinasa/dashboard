@@ -1,21 +1,6 @@
 import React, { Component } from "react";
 import { Bar, Line } from "react-chartjs-2";
-import {
-  ButtonDropdown,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  FormGroup,
-  Input,
-  Label,
-  Row,
-} from "reactstrap";
+import { Col, Row } from "reactstrap";
 import { CustomTooltips } from "@coreui/coreui-plugin-chartjs-custom-tooltips";
 import { getStyle } from "@coreui/coreui-pro/dist/js/coreui-utilities";
 import { Pie } from "react-chartjs-2";

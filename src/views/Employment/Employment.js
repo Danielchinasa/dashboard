@@ -1,31 +1,9 @@
 import React, { Component } from "react";
-import { Bar, Line } from "react-chartjs-2";
-import {
-  ButtonDropdown,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  FormGroup,
-  Input,
-  Label,
-  Row,
-} from "reactstrap";
+import { Col, Row } from "reactstrap";
 import { CustomTooltips } from "@coreui/coreui-plugin-chartjs-custom-tooltips";
 import { getStyle } from "@coreui/coreui-pro/dist/js/coreui-utilities";
-import { Pie } from "react-chartjs-2";
 import axios from "axios";
-import Map from "../../assets/img/crossriver41.gif";
-import { CardGroup } from "reactstrap";
-import Widget04 from "../Widgets/Widget04";
 import Chart from "react-apexcharts";
-import { AppSwitch } from "@coreui/react";
-import { VectorMap } from "react-jvectormap";
 import "./style.css";
 import ReactApexChart from "react-apexcharts";
 

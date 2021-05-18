@@ -585,13 +585,13 @@ class LocalGovernment extends Component {
     return (
       <div className="animated fadeIn">
         <Row>
-          <Col xs="6" sm="6" lg="6">
+          <Col xs="12" sm="12" lg="6">
             <p className="h1">
               Local Government:{" "}
               <span style={{ color: "#33b2df" }}>{todos.LgaName}</span>
             </p>
           </Col>
-          <Col xs="6" sm="6" lg="6">
+          <Col xs="12" sm="12" lg="6">
             <Button
               className="m-1"
               color="primary"

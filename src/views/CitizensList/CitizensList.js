@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody } from "reactstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "react-bootstrap-table/dist//react-bootstrap-table-all.min.css";
 import axios from "axios";
-import data from "../Tables/DataTable/_data";
+// import data from "../Tables/DataTable/_data";
 
 class CitizensList extends Component {
   constructor(props) {
@@ -40,12 +40,12 @@ class CitizensList extends Component {
   }
   render() {
     const { citizens } = this.state;
-    const calculate_age = () => {
-      var diff_ms = Date.now() - citizens.dob;
-      var age_dt = new Date(diff_ms);
+    // const calculate_age = () => {
+    //   var diff_ms = Date.now() - citizens.dob;
+    //   var age_dt = new Date(diff_ms);
 
-      return Math.abs(age_dt.getUTCFullYear() - 1970);
-    };
+    //   return Math.abs(age_dt.getUTCFullYear() - 1970);
+    // };
     return (
       <div className="animated fadeIn">
         <div className="animated">
