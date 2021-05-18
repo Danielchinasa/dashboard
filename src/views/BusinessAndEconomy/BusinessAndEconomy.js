@@ -300,6 +300,7 @@ class BusinessAndEconomy extends Component {
       radioSelected: 2,
       time: Date.now(),
       occupations: [],
+      percentages: [],
 
       series: [
         {
@@ -480,12 +481,16 @@ class BusinessAndEconomy extends Component {
     //   .catch((error) => console.log(error));
 
     axios
-      .all([axios.get("citizens/occupations")])
+      .all([
+        axios.get("citizens/occupations"),
+        axios.get("/citizens/percentages"),
+      ])
       .then(
-        axios.spread((obj1) => {
+        axios.spread((obj1, obj2) => {
           // Both requests are now complete
           this.setState({
             occupations: obj1.data,
+            percentages: obj2.data,
           });
         })
       )
@@ -500,7 +505,7 @@ class BusinessAndEconomy extends Component {
   }
 
   render() {
-    const { occupations } = this.state;
+    const { occupations, percentages } = this.state;
     return (
       <div className="animated fadeIn">
         <p className="h2">Business and Economy</p>
@@ -593,22 +598,14 @@ class BusinessAndEconomy extends Component {
         <Row>
           <Col xs="6" sm="6" lg="4">
             <p className="h2" style={{ color: "#33b2df" }}>
-              Businesses And Owner Characteristic
+              Businesses Owners
             </p>
-            <p className="h3">%</p>
+            <p className="h3">{percentages.percentBusinessOwners}%</p>
             <p>
-              <ins>Total firms in Cross River States</ins>
+              <ins>Business owners in Cross River States</ins>
             </p>
           </Col>
-          <Col xs="6" sm="6" lg="8">
-            <Chart
-              options={this.state.options2}
-              series={this.state.series2}
-              type="bar"
-              width="800"
-              height="250"
-            />
-          </Col>
+          <Col xs="6" sm="6" lg="8"></Col>
         </Row>
 
         {/* <Row>

@@ -483,34 +483,26 @@ class Education extends Component {
 
     axios
       .all([
-        axios.get("/citizens/populationOverview"),
-        axios.get("/citizens/maritalStatus"),
+        axios.get("/citizens/percentages"),
         axios.get("/citizens/educationLevel"),
-        axios.get("/citizens/occupations"),
       ])
       .then(
-        axios.spread((obj1, obj2, obj3, obj4) => {
+        axios.spread((obj1, obj2) => {
           // Both requests are now complete
           this.setState({
             todos: obj1.data,
-            marritalStatus: obj2.data,
-            educationLevel: obj3.data,
-            occupations: obj4.data,
+            educationLevel: obj2.data,
           });
         })
       )
       .catch((error) => console.log(error));
-    this.interval = setInterval(
-      () => this.setState({ time: Date.now() }),
-      1000
-    );
   }
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
   render() {
-    const { todos, marritalStatus, educationLevel, occupations } = this.state;
+    const { todos, educationLevel, occupations } = this.state;
     return (
       <div className="animated fadeIn">
         <p className="h1">Education</p>
@@ -518,15 +510,91 @@ class Education extends Component {
         <Row>
           <Col xs="6" sm="6" lg="4">
             <p className="h2">Educational Attainment</p>
-            <p className="h3">12.7%</p>
+            <p className="h3">{todos.percentAboveHighSchool}%</p>
             <p>
               <ins>High school graduate or higher in Cross River States</ins>
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">
             <Chart
-              options={this.state.options2}
-              series={this.state.series2}
+              options={{
+                chart: {
+                  type: "bar",
+                  height: 280,
+                },
+                plotOptions: {
+                  bar: {
+                    barHeight: "100%",
+                    distributed: true,
+                    horizontal: true,
+                    dataLabels: {
+                      position: "bottom",
+                    },
+                  },
+                },
+                colors: ["#33b2df", "#546E7A", "#FFA500", "#FF6347"],
+                dataLabels: {
+                  enabled: true,
+                  textAnchor: "start",
+                  style: {
+                    colors: ["#fff"],
+                  },
+                  formatter: function (val, opt) {
+                    return (
+                      opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+                    );
+                  },
+                  offsetX: 0,
+                  dropShadow: {
+                    enabled: true,
+                  },
+                },
+                stroke: {
+                  width: 1,
+                  colors: ["#fff"],
+                },
+                xaxis: {
+                  categories: [
+                    "Graduates",
+                    "Higer Education",
+                    "HighSchool",
+                    "Below Highschool",
+                  ],
+                },
+                yaxis: {
+                  labels: {
+                    show: false,
+                  },
+                },
+                title: {
+                  text: "Education Attainment in Cross River State",
+                  align: "center",
+                  floating: true,
+                },
+                tooltip: {
+                  theme: "dark",
+                  x: {
+                    show: false,
+                  },
+                  y: {
+                    title: {
+                      formatter: function () {
+                        return "";
+                      },
+                    },
+                  },
+                },
+              }}
+              series={[
+                {
+                  data: [
+                    educationLevel.graduates,
+                    educationLevel.higerEducation,
+                    educationLevel.highschool,
+                    educationLevel.belowHighSchool,
+                  ],
+                },
+              ]}
               type="bar"
               width="800"
               height="250"

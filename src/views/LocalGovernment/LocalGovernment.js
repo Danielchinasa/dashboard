@@ -306,6 +306,7 @@ class LocalGovernment extends Component {
       marritalStatus: [],
       educationLevel: [],
       occupations: [],
+      overView: [],
 
       series: [
         {
@@ -517,7 +518,7 @@ class LocalGovernment extends Component {
     //   1000
     // );
 
-    this.handleFetch("Azerbaijan");
+    this.handleFetch("1");
   }
   componentWillUnmount() {
     clearInterval(this.interval);
@@ -528,20 +529,26 @@ class LocalGovernment extends Component {
 
   handleFetch = (target) => {
     axios
-      .all([axios.get("/citizens/lga_percentages/" + target)])
+      .all([
+        axios.get("/citizens/lga_percentages/" + target),
+        axios.get("/citizens/educationLevel"),
+        axios.get("/citizens/populationOverview"),
+      ])
       .then(
-        axios.spread((obj1) => {
+        axios.spread((obj1, obj2, obj3) => {
           // Both requests are now complete
           this.setState({
             todos: obj1.data,
+            educationLevel: obj2.data,
+            overView: obj3.data,
           });
         })
       )
       .catch((error) => console.log(error));
-    this.interval = setInterval(
-      () => this.setState({ time: Date.now() }),
-      1000
-    );
+    // this.interval = setInterval(
+    //   () => this.setState({ time: Date.now() }),
+    //   1000
+    // );
     // fetch(
     //   "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats?country=" +
     //     target,
@@ -573,35 +580,18 @@ class LocalGovernment extends Component {
   };
 
   render() {
-    const { todos, marritalStatus, educationLevel, occupations } = this.state;
+    const { todos, marritalStatus, educationLevel, occupations, overView } =
+      this.state;
     return (
       <div className="animated fadeIn">
         <Row>
           <Col xs="6" sm="6" lg="6">
-            <p className="h1">Local Government: {this.state.targetCountry}</p>
+            <p className="h1">
+              Local Government:{" "}
+              <span style={{ color: "#33b2df" }}>{todos.LgaName}</span>
+            </p>
           </Col>
           <Col xs="6" sm="6" lg="6">
-            <Button
-              className="m-1"
-              onClick={() => this.handleChange("Azerbaijan")}
-              color="primary"
-            >
-              Azerbaijan
-            </Button>
-            <Button
-              className="m-1"
-              color="primary"
-              onClick={() => this.handleChange("Russia")}
-            >
-              Russia
-            </Button>
-            <Button
-              className="m-1"
-              color="primary"
-              onClick={() => this.handleChange("Turkey")}
-            >
-              Turkey
-            </Button>
             <Button
               className="m-1"
               color="primary"
@@ -760,8 +750,13 @@ class LocalGovernment extends Component {
           >
             POPULATION
           </Widget04>
-          <Widget04 icon="icon-home" color="success" header="65712" value="25">
-            MEDIAN HOUSEHOLD INCOME
+          <Widget04
+            icon="icon-home"
+            color="success"
+            header="₦10,712"
+            value="25"
+          >
+            MEDIAN INCOME
           </Widget04>
           <Widget04
             icon="icon-wallet"
@@ -780,7 +775,7 @@ class LocalGovernment extends Component {
             <p className="h2" style={{ color: "#33b2df" }}>
               Veterans
             </p>
-            <p className="h3">{this.state.veterans}%</p>
+            <p className="h3">{todos.veterans}%</p>
             <p>
               <ins>Veterans in Cross River States</ins>
             </p>
@@ -859,7 +854,7 @@ class LocalGovernment extends Component {
               }}
               series={[
                 {
-                  data: [300, 500],
+                  data: [todos.maleVeterans, todos.femaleVeterans],
                 },
               ]}
               type="bar"
@@ -875,7 +870,7 @@ class LocalGovernment extends Component {
               Age and Sex
             </p>
             <p>
-              <span className="h3">38.5</span>
+              <span className="h3">38</span>
               <small>+/- 0.1</small>
             </p>
 
@@ -900,7 +895,7 @@ class LocalGovernment extends Component {
                     },
                   },
                 },
-                colors: ["#33b2df", "#546E7A", "#d4526e"],
+                colors: ["#33b2df", "#546E7A"],
                 dataLabels: {
                   enabled: true,
                   textAnchor: "start",
@@ -922,11 +917,7 @@ class LocalGovernment extends Component {
                   colors: ["#fff"],
                 },
                 xaxis: {
-                  categories: [
-                    "Under 5 years",
-                    "18 years and older",
-                    "65 years and older",
-                  ],
+                  categories: ["Total male", "Total Female"],
                 },
                 yaxis: {
                   labels: {
@@ -934,7 +925,7 @@ class LocalGovernment extends Component {
                   },
                 },
                 title: {
-                  text: "Population by Age Range in Cross River State",
+                  text: "Population by Sex in Cross River State",
                   align: "center",
                   floating: true,
                 },
@@ -954,7 +945,7 @@ class LocalGovernment extends Component {
               }}
               series={[
                 {
-                  data: [400, 430, 1100],
+                  data: [overView.totalMales, overView.totalFemales],
                 },
               ]}
               type="bar"
@@ -970,7 +961,7 @@ class LocalGovernment extends Component {
               Foreign Born
             </p>
             <p>
-              <span className="h3">13.7%</span>
+              <span className="h3">{todos.percentIndigenes}</span>
               <small>+/- 0.1</small>
             </p>
 
@@ -1012,7 +1003,7 @@ class LocalGovernment extends Component {
               Health Insurance
             </p>
             <p>
-              <span className="h3">9.2%</span>
+              <span className="h3">{todos.percentWithHealthInsurance}</span>
               <small>+/- 0.1</small>
             </p>
 
@@ -1021,53 +1012,14 @@ class LocalGovernment extends Component {
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">
-            <ReactApexChart
+            {/* <ReactApexChart
               options={{}}
               series={[44, 55]}
               // type="line"
               type="donut"
               // height={350}
               width="380"
-            />
-          </Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col xs="6" sm="6" lg="4">
-            <p className="h2" style={{ color: "#33b2df" }}>
-              Disability
-            </p>
-            <p className="h3">12.7%</p>
-            <p>
-              <ins>Disabled population in Cross River States</ins>
-            </p>
-          </Col>
-          <Col xs="6" sm="6" lg="8">
-            <Chart
-              options={this.state.options2}
-              series={this.state.series2}
-              type="bar"
-              width="800"
-              height="250"
-            />
-          </Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col xs="6" sm="6" lg="4">
-            <p className="h2" style={{ color: "#33b2df" }}>
-              Households
-            </p>
-            <p>
-              <span className="h3">122,802,852</span>
-              <small>+/- 137,327</small>
-            </p>
-
-            <p>
-              <ins>Total households in Cross River State</ins>
-            </p>
-          </Col>
-          <Col xs="6" sm="6" lg="8">
+            /> */}
             <VectorMap
               className="jvectormap-container"
               map={"world_mill"}
@@ -1098,10 +1050,32 @@ class LocalGovernment extends Component {
         <Row>
           <Col xs="6" sm="6" lg="4">
             <p className="h2" style={{ color: "#33b2df" }}>
+              Disability
+            </p>
+            <p className="h3">{todos.percentWithDisability}%</p>
+            <p>
+              <ins>Disabled population in Cross River States</ins>
+            </p>
+          </Col>
+          <Col xs="6" sm="6" lg="8">
+            <ReactApexChart
+              options={{}}
+              series={[overView.totalEnrolled]}
+              // type="line"
+              type="donut"
+              // height={350}
+              width="380"
+            />
+          </Col>
+        </Row>
+        <hr />
+        <Row>
+          <Col xs="6" sm="6" lg="4">
+            <p className="h2" style={{ color: "#33b2df" }}>
               Business Count
             </p>
             <p>
-              <span className="h3">{occupations.businessOwners}</span>
+              <span className="h3">{todos.percentBusinessOwners}</span>
               <small>+/- 1</small>
             </p>
 
@@ -1142,22 +1116,94 @@ class LocalGovernment extends Component {
             <p className="h2" style={{ color: "#33b2df" }}>
               Educational Attainment
             </p>
-            <p className="h3">12.7%</p>
+            <p className="h3">{todos.percentAboveHighSchool}%</p>
             <p>
               <ins>High school graduate or higher in Cross River States</ins>
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">
             <Chart
-              options={this.state.options2}
+              options={{
+                chart: {
+                  type: "bar",
+                  height: 280,
+                },
+                plotOptions: {
+                  bar: {
+                    barHeight: "100%",
+                    distributed: true,
+                    horizontal: true,
+                    dataLabels: {
+                      position: "bottom",
+                    },
+                  },
+                },
+                colors: ["#33b2df", "#546E7A", "#FFA500", "#FF6347"],
+                dataLabels: {
+                  enabled: true,
+                  textAnchor: "start",
+                  style: {
+                    colors: ["#fff"],
+                  },
+                  formatter: function (val, opt) {
+                    return (
+                      opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+                    );
+                  },
+                  offsetX: 0,
+                  dropShadow: {
+                    enabled: true,
+                  },
+                },
+                stroke: {
+                  width: 1,
+                  colors: ["#fff"],
+                },
+                xaxis: {
+                  categories: [
+                    "Graduates",
+                    "Higer Education",
+                    "HighSchool",
+                    "Below Highschool",
+                  ],
+                },
+                yaxis: {
+                  labels: {
+                    show: false,
+                  },
+                },
+                title: {
+                  text: "Education Attainment in Cross River State",
+                  align: "center",
+                  floating: true,
+                },
+                tooltip: {
+                  theme: "dark",
+                  x: {
+                    show: false,
+                  },
+                  y: {
+                    title: {
+                      formatter: function () {
+                        return "";
+                      },
+                    },
+                  },
+                },
+              }}
               series={[
                 {
-                  data: [300, 500],
+                  data: [
+                    educationLevel.graduates,
+                    educationLevel.higerEducation,
+                    educationLevel.highschool,
+                    educationLevel.belowHighSchool,
+                  ],
                 },
               ]}
               type="bar"
               width="800"
-              height="150"
+              height="250"
             />
           </Col>
         </Row>

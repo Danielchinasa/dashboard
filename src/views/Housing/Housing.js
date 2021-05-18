@@ -390,14 +390,7 @@ class Housing extends Component {
             },
           },
         },
-        colors: [
-          "#33b2df",
-          "#546E7A",
-          "#546E7A",
-          "#546E7A",
-          "#546E7A",
-          "#546E7A",
-        ],
+        colors: ["#33b2df", "#546E7A", "#FFA500"],
         dataLabels: {
           enabled: true,
           textAnchor: "start",
@@ -417,14 +410,7 @@ class Housing extends Component {
           colors: ["#fff"],
         },
         xaxis: {
-          categories: [
-            "Hearing difficulty",
-            "Vision difficulty",
-            "cognitive difficulty",
-            "Female",
-            "Female",
-            "Female",
-          ],
+          categories: ["Below 30 mins", "1 hour", "Above 1 hour"],
         },
         yaxis: {
           labels: {
@@ -479,7 +465,7 @@ class Housing extends Component {
 
     axios
       .all([
-        axios.get("/citizens/populationOverview"),
+        axios.get("/citizens/percentages"),
         axios.get("/citizens/maritalStatus"),
         axios.get("/citizens/educationLevel"),
         axios.get("/citizens/occupations"),
@@ -511,7 +497,7 @@ class Housing extends Component {
       <div className="animated fadeIn">
         <p className="h2">Housing</p>
         <hr style={{ color: "#000" }} />
-        <Row>
+        {/* <Row>
           <Col xs="6" sm="6" lg="4">
             <p className="h3" style={{ color: "#33b2df" }}>
               Housing Units
@@ -551,14 +537,14 @@ class Housing extends Component {
               }}
             />
           </Col>
-        </Row>
-        <hr />
+        </Row> */}
+        {/* <hr /> */}
         <Row>
           <Col xs="6" sm="6" lg="4">
-            <p className="h1">Homeownership</p>
-            <p className="h3">12.7%</p>
+            <p className="h1">Home Ownership</p>
+            <p className="h3">{todos.percentHouseOwners}%</p>
             <p>
-              <ins>Homeownership rate in Cross River States</ins>
+              <ins>Home Ownership rate in Cross River States</ins>
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">

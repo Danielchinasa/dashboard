@@ -372,7 +372,7 @@ class Employment extends Component {
 
       series2: [
         {
-          data: [400, 430, 509, 743, 200, 473],
+          data: [40, 5, 9],
         },
       ],
       options2: {
@@ -390,14 +390,7 @@ class Employment extends Component {
             },
           },
         },
-        colors: [
-          "#33b2df",
-          "#546E7A",
-          "#546E7A",
-          "#546E7A",
-          "#546E7A",
-          "#546E7A",
-        ],
+        colors: ["#33b2df", "#546E7A", "#FFA500"],
         dataLabels: {
           enabled: true,
           textAnchor: "start",
@@ -417,14 +410,7 @@ class Employment extends Component {
           colors: ["#fff"],
         },
         xaxis: {
-          categories: [
-            "Hearing difficulty",
-            "Vision difficulty",
-            "cognitive difficulty",
-            "Female",
-            "Female",
-            "Female",
-          ],
+          categories: ["Below 30 mins", "1 hour", "Above 1 hour"],
         },
         yaxis: {
           labels: {
@@ -432,8 +418,7 @@ class Employment extends Component {
           },
         },
         title: {
-          text:
-            "Transportation to Work for Workers 16 Years and Over in Cross River State",
+          text: "Transportation to Work for Workers 16 Years and Over in Cross River State",
           align: "center",
           floating: true,
         },

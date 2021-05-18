@@ -306,7 +306,7 @@ class PeopleAndPopulation extends Component {
 
       series: [
         {
-          data: [400, 430, 1100],
+          data: [20, 43],
         },
       ],
       options: {
@@ -344,11 +344,7 @@ class PeopleAndPopulation extends Component {
           colors: ["#fff"],
         },
         xaxis: {
-          categories: [
-            "Under 5 years",
-            "18 years and older",
-            "65 years and older",
-          ],
+          categories: ["English", "Non-English"],
         },
         yaxis: {
           labels: {
@@ -420,10 +416,10 @@ class PeopleAndPopulation extends Component {
         })
       )
       .catch((error) => console.log(error));
-    this.interval = setInterval(
-      () => this.setState({ time: Date.now() }),
-      1000
-    );
+    // this.interval = setInterval(
+    //   () => this.setState({ time: Date.now() }),
+    //   1000
+    // );
   }
   componentWillUnmount() {
     clearInterval(this.interval);
@@ -451,11 +447,77 @@ class PeopleAndPopulation extends Component {
           </Col>
           <Col xs="6" sm="6" lg="8">
             <Chart
-              options={this.state.options}
-              series={this.state.series}
+              options={{
+                chart: {
+                  type: "bar",
+                  height: 380,
+                },
+                plotOptions: {
+                  bar: {
+                    barHeight: "100%",
+                    distributed: true,
+                    horizontal: true,
+                    dataLabels: {
+                      position: "bottom",
+                    },
+                  },
+                },
+                colors: ["#33b2df", "#FBC131"],
+                dataLabels: {
+                  enabled: true,
+                  textAnchor: "start",
+                  style: {
+                    colors: ["#fff"],
+                  },
+                  formatter: function (val, opt) {
+                    return (
+                      opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+                    );
+                  },
+                  offsetX: 0,
+                  dropShadow: {
+                    enabled: true,
+                  },
+                },
+                stroke: {
+                  width: 1,
+                  colors: ["#fff"],
+                },
+                xaxis: {
+                  categories: ["Total male", "Total Female"],
+                },
+                yaxis: {
+                  labels: {
+                    show: false,
+                  },
+                },
+                title: {
+                  text: "Population by Sex in Cross River State",
+                  align: "center",
+                  floating: true,
+                },
+                tooltip: {
+                  theme: "dark",
+                  x: {
+                    show: false,
+                  },
+                  y: {
+                    title: {
+                      formatter: function () {
+                        return "";
+                      },
+                    },
+                  },
+                },
+              }}
+              series={[
+                {
+                  data: [todos.totalMales, todos.totalFemales],
+                },
+              ]}
               type="bar"
               width="800"
-              height="200"
+              height="150"
             />
             <div>
               <AppSwitch

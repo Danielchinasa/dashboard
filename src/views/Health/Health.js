@@ -376,7 +376,7 @@ class Health extends Component {
 
       series2: [
         {
-          data: [400, 430, 509, 743, 200, 473],
+          data: [12, 90, 4],
         },
       ],
       options2: {
@@ -394,14 +394,7 @@ class Health extends Component {
             },
           },
         },
-        colors: [
-          "#33b2df",
-          "#546E7A",
-          "#546E7A",
-          "#546E7A",
-          "#546E7A",
-          "#546E7A",
-        ],
+        colors: ["#33b2df", "#546E7A", "#FBC131"],
         dataLabels: {
           enabled: true,
           textAnchor: "start",
@@ -425,9 +418,6 @@ class Health extends Component {
             "Hearing difficulty",
             "Vision difficulty",
             "cognitive difficulty",
-            "Female",
-            "Female",
-            "Female",
           ],
         },
         yaxis: {
