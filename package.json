@@ -22,7 +22,7 @@
     "type": "git",
     "url": "git@github.com:coreui/coreui-pro-react-admin-template.git"
   },
-  "proxy": "http://34.220.7.237:8090/api",
+  "proxy": "http://localhost:8090/api",
   "dependencies": {
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",
     "@coreui/coreui-pro": "^2.0.3",

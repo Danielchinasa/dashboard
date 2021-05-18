@@ -834,7 +834,8 @@ class LocalGovernment extends Component {
                   },
                 },
                 title: {
-                  text: "Veterans by Sex in ",
+                  text:
+                    "Veterans by Sex in " + todos.LgaName + " Local Government",
                   align: "center",
                   floating: true,
                 },
@@ -875,7 +876,7 @@ class LocalGovernment extends Component {
             </p>
 
             <p>
-              <ins>Median age in Cross River State</ins>
+              <ins>Median age in {todos.LgaName} Local Government</ins>
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">
@@ -925,7 +926,10 @@ class LocalGovernment extends Component {
                   },
                 },
                 title: {
-                  text: "Population by Sex in Cross River State",
+                  text:
+                    "Population by Sex in " +
+                    todos.LgaName +
+                    " Local Government",
                   align: "center",
                   floating: true,
                 },
@@ -966,7 +970,7 @@ class LocalGovernment extends Component {
             </p>
 
             <p>
-              <ins>Foreign born in Cross River State</ins>
+              <ins>Foreign born in {todos.LgaName} Local Government</ins>
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">
@@ -1008,7 +1012,10 @@ class LocalGovernment extends Component {
             </p>
 
             <p>
-              <ins>Without Health Insurance Coverage in Cross River State</ins>
+              <ins>
+                Without Health Insurance Coverage in {todos.LgaName} Local
+                Government
+              </ins>
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">
@@ -1054,7 +1061,7 @@ class LocalGovernment extends Component {
             </p>
             <p className="h3">{todos.percentWithDisability}%</p>
             <p>
-              <ins>Disabled population in Cross River States</ins>
+              <ins>Disabled population in {todos.LgaName} Local Government</ins>
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">
@@ -1080,7 +1087,10 @@ class LocalGovernment extends Component {
             </p>
 
             <p>
-              <ins>Total employer establishments in Cross River State</ins>
+              <ins>
+                Total employer establishments in {todos.LgaName} Local
+                Government
+              </ins>
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">
@@ -1118,7 +1128,10 @@ class LocalGovernment extends Component {
             </p>
             <p className="h3">{todos.percentAboveHighSchool}%</p>
             <p>
-              <ins>High school graduate or higher in Cross River States</ins>
+              <ins>
+                High school graduate or higher in {todos.LgaName} Local
+                Government
+              </ins>
             </p>
           </Col>
           <Col xs="6" sm="6" lg="8">
@@ -1173,7 +1186,10 @@ class LocalGovernment extends Component {
                   },
                 },
                 title: {
-                  text: "Education Attainment in Cross River State",
+                  text:
+                    "Education Attainment in " +
+                    todos.LgaName +
+                    " Local Government",
                   align: "center",
                   floating: true,
                 },

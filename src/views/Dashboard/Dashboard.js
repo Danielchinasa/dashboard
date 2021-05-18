@@ -440,17 +440,22 @@ class Dashboard extends Component {
             POPULATION
           </Widget04>
           <Widget04 icon="icon-home" color="success" header="65712" value="25">
-            MEDIAN HOUSEHOLD INCOME
+            MEDIAN INCOME
           </Widget04>
           <Widget04
             icon="icon-wallet"
             color="warning"
-            header="12.3%"
+            header="₦10,712"
             value="25"
           >
             POVERTY RATE
           </Widget04>
-          <Widget04 icon="icon-badge" color="primary" header="28.9%" value="25">
+          <Widget04
+            icon="icon-badge"
+            color="primary"
+            header={percentages.percentAboveHighSchool}
+            value="25"
+          >
             BACHELOR'S DEGREE OR HIGHER
           </Widget04>
         </CardGroup>
